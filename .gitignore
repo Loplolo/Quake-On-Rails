@@ -1,0 +1,9 @@
+history.txt
+
+# build artifacts
+*.dat
+*.lno
+
+# editor swap/backup files
+*~
+\#*\#

@@ -1,0 +1,42 @@
+* Quake On Rails
+
+*Quake on Rails* is a lightgun arcade shooter mod for Quake that includes:
+- Automatic player movement on rails
+- Free moving mouse shooting
+- Map entity definition to create custom maps
+- Custom hud and menu
+- Scoring system with a score_value attribute for each entity killed
+- Shooting items collection and interactables
+- Difficulty scaling and monsters AI tweaks
+- Scoreboard for each map memorized in a file 
+
+I suggest hooking up a wiimote or any IR device for maximum immersion.
+This mod is *very* work in progress.
+
+** Building and running
+
+Create a folder `qor/` in your engine's `-basedir`, put the release files in it and run `game qor` inside the console.
+
+For building run `fteqcc` inside the folder and move the generated `*.dat` files inside the game folder.
+
+Requires `qor.pak` and the original pak0.pak / pak1.pak
+
+** TODOs list
+
+- Make more playable maps
+- Write a simple tutorial in the help menu
+- Improve menu/hud aesthetics  
+- Add new crosshairs
+- Custom soundtrack and sound effects
+- Gameplay balancing
+- Bug hunting
+
+*** Copper mod
+
+QoR is built on top of [[https://github.com/itslunaranyo/copper][Copper]] as it includes various fixes to vanilla gameplay. 
+See [[file:README-COPPER.md][README-COPPER.md]].
+
+*** License
+
+GNU General Public License v2 or later, inherited from id Software's
+original QuakeC source. See [[file:LICENSE][LICENSE]].

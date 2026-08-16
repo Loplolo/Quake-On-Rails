@@ -1,0 +1,80 @@
+../progs.dat
+#pragma autoproto
+//#define NO_CSQC 1		// uncomment for a CSQC-less build
+
+defs.qc
+constants.qc
+shared.qc
+scores.qc
+
+maths.qc
+utility.qc
+subs.qc
+subs_move.qc
+subs_tgt.qc
+ai.qc
+meat.qc		// gibs and gore
+combat.qc	// fight.qc decrufted away
+
+items.qc
+item_health_armor.qc
+item_weap_ammo.qc
+item_powerups.qc
+item_keys_runes.qc
+item_backpack.qc
+
+projectiles.qc
+weapons.qc
+w_axe.qc
+w_lightning.qc
+w_shotguns.qc
+w_rockets.qc
+w_nails.qc
+dev.qc
+impulse.qc
+
+world.qc
+qor_rail.qc
+client.qc
+player.qc
+monsters.qc
+doors.qc
+buttons.qc
+triggers.qc
+t_tele.qc
+t_level.qc
+t_ctrl.qc
+plats.qc
+lights.qc
+explobox.qc
+misc.qc
+shooters.qc
+walls.qc
+sound.qc
+
+fog.qc			// atmosfear
+t_void.qc		// bottomless pits
+fx.qc			// more dots
+
+// prefixed all these so I can more easily open all the monster files at once
+mon_ogre.qc
+mon_demon.qc
+mon_shambler.qc
+mon_knight.qc
+mon_soldier.qc
+mon_wizard.qc
+mon_dog.qc
+mon_zombie.qc
+mon_boss.qc
+
+mon_tarbaby.qc	// registered
+mon_hknight.qc	// registered
+mon_fish.qc		// registered
+mon_shalrath.qc	// registered
+mon_enforcer.qc	// registered
+mon_oldone.qc		// registered
+
+test.qc
+
+fteextensions.qc
+

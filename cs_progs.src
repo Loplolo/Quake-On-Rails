@@ -1,0 +1,10 @@
+../csprogs.dat
+defs.qc
+constants.qc
+maths.qc
+csdefs.qc
+
+cs_view.qc
+cs_hud.qc
+cs_arcade_hud.qc
+m_intermission.qc
