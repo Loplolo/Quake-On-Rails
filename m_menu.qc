@@ -20,17 +20,17 @@ const float MENU_MAPS = 4;
 const float MENU_SETTINGS = 5;
 
 const string CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!=";
-float slot0;
-float slot1;
-float slot2;
-float slot3;
+const float CHARSET_LEN = strlen(CHARSET);
+
+float slot[4];
+
 
 string get_nickname()
 {
-    string c0 = substring(CHARSET, slot0, 1);
-    string c1 = substring(CHARSET, slot1, 1);
-    string c2 = substring(CHARSET, slot2, 1);
-    string c3 = substring(CHARSET, slot3, 1);
+    string c0 = substring(CHARSET, slot[0], 1);
+    string c1 = substring(CHARSET, slot[1], 1);
+    string c2 = substring(CHARSET, slot[2], 1);
+    string c3 = substring(CHARSET, slot[3], 1);
     return strcat(c0, c1, c2, c3);
 }
 
@@ -103,9 +103,7 @@ void() map_selection_menu =
 
     if (sui_button("map_e1m1", [0, ypos], [btn_w, btn_h], "Start (E1M1)"))
     { 
-        localcmd(strcat("name ", get_nickname(), "\n"));
         localcmd("map OR_E1M1\n");
-
 		current_menu = MENU_MAIN; 
     }
 
@@ -132,8 +130,8 @@ void() player_setup_menu =
 
     sui_set_align([SUI_ALIGN_START, SUI_ALIGN_START]);
 
-    local float slot_w = 45;
-    local float slot_h = 50;
+    local float slot_width = 45;
+    local float slot_height = 50;
     local float gap = 10;
     local float start_x = 55; // (320 - (4 * 45 + 3 * 10)) / 2 = 55
     local float y_up = 38;
@@ -141,55 +139,35 @@ void() player_setup_menu =
     local float y_dn = 112;
 
     local float x0 = start_x;
-    local float x1 = start_x + slot_w + gap;
-    local float x2 = start_x + (slot_w + gap) * 2;
-    local float x3 = start_x + (slot_w + gap) * 3;
+    local float x1 = start_x + slot_width + gap;
+    local float x2 = start_x + (slot_width + gap) * 2;
+    local float x3 = start_x + (slot_width + gap) * 3;
 
-    // Slot 0
-    img_button("btn_up_0", [x0, y_up], [slot_w, 20], "up.png") ? slot0 = (slot0 + 35) % 36 : 0;
-    sui_push_frame([x0, y_box], [slot_w, slot_h]);
-    sui_fill([0, 0], [slot_w, slot_h], MENU_BG_DARK, 0.9, 0);
-    sui_border_box([0, 0], [slot_w, slot_h], 1, MENU_BORDER, 0.9, 0);
-    sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_CENTER]);
-    sui_text([0, 0], MENU_TEXT_LARGE, substring(CHARSET, slot0, 1), MENU_TEXT_1, 1, 0);
-    sui_pop_frame();
-    img_button("btn_dn_0", [x0, y_dn], [slot_w, 20], "down.png") ? slot0 = (slot0 + 1) % 36 : 0;
+	local float x_pos[4] = {x0, x1, x2, x3};
+	local string btn_up_ids[4] = {"btn_up_0", "btn_up_1", "btn_up_2", "btn_up_3"};
+	local string btn_dn_ids[4] = {"btn_dn_0", "btn_dn_1", "btn_dn_2", "btn_dn_3"};
 
-    // Slot 1
-    img_button("btn_up_1", [x1, y_up], [slot_w, 20], "up.png") ? slot1 = (slot1 + 35) % 36 : 0;
-    sui_push_frame([x1, y_box], [slot_w, slot_h]);
-    sui_fill([0, 0], [slot_w, slot_h], MENU_BG_DARK, 0.9, 0);
-    sui_border_box([0, 0], [slot_w, slot_h], 1, MENU_BORDER, 0.9, 0);
-    sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_CENTER]);
-    sui_text([0, 0], MENU_TEXT_LARGE, substring(CHARSET, slot1, 1), MENU_TEXT_1, 1, 0);
-    sui_pop_frame();
-    img_button("btn_dn_1", [x1, y_dn], [slot_w, 20], "down.png") ? slot1 = (slot1 + 1) % 36 : 0;
+	local float i;
+	for (i = 0; i < 4; i++) {
+		
+		if (slot[i] < 0 || slot[i] >= CHARSET_LEN) slot[i] = 0;
 
-    // Slot 2
-    img_button("btn_up_2", [x2, y_up], [slot_w, 20], "up.png") ? slot2 = (slot2 + 35) % 36 : 0;
-    sui_push_frame([x2, y_box], [slot_w, slot_h]);
-    sui_fill([0, 0], [slot_w, slot_h], MENU_BG_DARK, 0.9, 0);
-    sui_border_box([0, 0], [slot_w, slot_h], 1, MENU_BORDER, 0.9, 0);
-    sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_CENTER]);
-    sui_text([0, 0], MENU_TEXT_LARGE, substring(CHARSET, slot2, 1), MENU_TEXT_1, 1, 0);
-    sui_pop_frame();
-    img_button("btn_dn_2", [x2, y_dn], [slot_w, 20], "down.png") ? slot2 = (slot2 + 1) % 36 : 0;
+		img_button(btn_up_ids[i], [x_pos[i], y_up], [slot_width, 20], "up.png") ? slot[i] = (slot[i] + CHARSET_LEN - 1) % CHARSET_LEN : 0;
 
-    // Slot 3
-    img_button("btn_up_3", [x3, y_up], [slot_w, 20], "up.png") ? slot3 = (slot3 + 35) % 36 : 0;
-    sui_push_frame([x3, y_box], [slot_w, slot_h]);
-    sui_fill([0, 0], [slot_w, slot_h], MENU_BG_DARK, 0.9, 0);
-    sui_border_box([0, 0], [slot_w, slot_h], 1, MENU_BORDER, 0.9, 0);
-    sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_CENTER]);
-    sui_text([0, 0], MENU_TEXT_LARGE, substring(CHARSET, slot3, 1), MENU_TEXT_1, 1, 0);
-    sui_pop_frame();
-    img_button("btn_dn_3", [x3, y_dn], [slot_w, 20], "down.png") ? slot3 = (slot3 + 1) % 36 : 0;
+		sui_push_frame([x_pos[i], y_box], [slot_width, slot_height]);
+		sui_fill([0, 0], [slot_width, slot_height], MENU_BG_DARK, 0.9, 0);
+		sui_border_box([0, 0], [slot_width, slot_height], 1, MENU_BORDER, 0.9, 0);
+		sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_CENTER]);
+		sui_text([0, 0], MENU_TEXT_LARGE, substring(CHARSET, slot[i], 1), MENU_TEXT_1, 1, 0);
+		sui_pop_frame();
+		img_button(btn_dn_ids[i], [x_pos[i], y_dn], [slot_width, 20], "down.png") ? slot[i] = (slot[i] + 1) % CHARSET_LEN : 0;
+	}
 
     // Submit
     sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_END]);
     if (sui_button("submit", [0, -10], [120, 24], "Submit"))
     {
-        localcmd(strcat("name ", get_nickname(), "\n"));
+        localcmd(strcat("set name ", get_nickname(), "\n"));
         current_menu = MENU_MAPS;
     }
 
@@ -322,7 +300,7 @@ void(float dir) res_cycle =
 {
 	if (res_index < 0) res_index = res_current_index();
 	res_index += dir;
-	if (res_index < 0)          res_index = RES_COUNT - 1;
+	if (res_index < 0) res_index = RES_COUNT - 1;
 	if (res_index >= RES_COUNT) res_index = 0;
 };
 
@@ -471,7 +449,7 @@ void() main_menu =
 {
     sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_START]);
     sui_text([0, 36], MENU_TEXT_LARGE, "Quake on Rails", [1, 1, 1], 1, 0);
-    
+	
     vector pos = [0, -15];
     vector size = [140, 156];
     sui_set_align([SUI_ALIGN_CENTER, SUI_ALIGN_END]);
